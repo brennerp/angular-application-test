@@ -1,0 +1,62 @@
+/* Settings for container and grid system */
+
+/* Decidi dividir o site num grid de apenas 3 colunas, pois é o número
+necessário para a estrutura que escolhi */
+
+.container {
+  width: 90%;
+  max-width: 1280px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.row {
+  width: 100%;
+  clear: both;
+  padding: 0;
+  margin: 0;
+}
+
+[class*="col-"]:first-child {
+  margin-left: 0;
+}
+
+[class*="col-"] {
+  float: left;
+  margin-bottom: 5px;
+}
+
+.col-3 {
+  width: 100%;
+}
+
+/* Media queries */
+@media all and (min-width: 0px) {
+  [class*="col-"]: {
+    margin-left: 0%;
+  }
+
+  .col-1 {
+    width: 100%;
+  }
+
+  .col-2 {
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 700px) {
+  /* Apesar da margem desejada ser 2%, diminui seu valor para que as colunas
+  não "snappem" para a próxima linha  */
+  [class*="col-"] {
+    margin-left: 1.8%;
+  }
+
+  .col-1 {
+    width: 32%;
+  }
+
+  .col-2 {
+    width: 65.333%;
+  }
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html ng-app='application'>
+
+<head>
+  <meta charset="utf-8">
+  <title> Registro de Contatos </title>
+  <meta name="viewport" content="width=device-width">
+
+  <link rel="stylesheet" href="css/grid.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src="angular/angular.min.js"></script>
+  <script src="js/app.js"> angular.module ('application', []) </script>
+</head>
+
+<body>
+  <div class="container" ng-controller="FormController as ctrl">
+    <div class="row">
+      <form id="form" class="form col-3">
+        Nome completo: <br>
+        <input ng-model="ctrl.contactName" type="text" name="contactName" required/> <br>
+        E-mail: <br>
+        <input ng-model="ctrl.email" type="email" name="email" required/> <br>
+        Telefones:
+        <input ng-model="ctrl.telephone" type="text" name="telephone" required/> <br>
+        Observações:
+        <input ng-model="ctrl.observation" type="text" name="observation" required/> <br>
+        Endereços:
+        <input  ng-model="ctrl.adress" type="text" name="adress" required/> <br>
+        <br>
+        <button type="button" name="resetForm"> Resetar formulário </button>
+        <button ng-click="ctrl.CreateContact()" type="submit" name="addContact"> Adicionar contato </button>
+
+      </form>
+    </div>
+
+    <div class="col-3" id="contacts-list">
+      <div class="row">
+        <div class="contact col-1">
+          <h3> Contato 1 </h3>
+          <h4> Observação </h4>
+          <p> contato1@gmail.com </p>
+          <p> +zz yy xxxxx-xxxx</p>
+          <p> Endereço...</p>
+        </div>
+
+        <div class="contact col-1">
+          <h3> Contato 2 </h3>
+          <h4> Observação </h4>
+          <p> contato2@gmail.com </p>
+          <p> +zz yy xxxxx-xxxx</p>
+          <p> Endereço...</p>
+        </div>
+
+        <div class="contact col-1">
+          <h3> Contato 3 </h3>
+          <h4> Observação </h4>
+          <p> contato3@gmail.com </p>
+          <p> +zz yy xxxxx-xxxx</p>
+          <p> Endereço...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
