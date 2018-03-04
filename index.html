@@ -10,31 +10,36 @@
   <link rel="stylesheet" href="css/style.css">
 
   <script src="angular/angular.min.js"></script>
-  <script src="js/app.js"> angular.module ('application', []) </script>
+  <script src="js/app.js"> </script>
+  <script src="js/telephone.js"></script>
+  <script src="js/contact.js"></script>
+  <script src="js/contactList.js"></script>
 </head>
 
 <body>
-  <div class="container" ng-controller="FormController as ctrl">
+  <div class="container" ng-controller="ListController as ctrl">
     <div class="row">
-      <form id="form" class="form col-3">
+      <form novalidate id="form" class="form col-3">
         Nome completo: <br>
-        <input ng-model="ctrl.contactName" type="text" name="contactName" required/> <br>
+        <input ng-model="ctrl.contact.contactName" type="text" name="contactName" required/> <br>
         E-mail: <br>
-        <input ng-model="ctrl.email" type="email" name="email" required/> <br>
+        <input ng-model="ctrl.contact.email" type="email" name="email" required/> <br>
         Telefones:
-        <input ng-model="ctrl.telephone" type="text" name="telephone" required/> <br>
+        <input type="text" name="telephone" required/> <br>
         Observações:
-        <input ng-model="ctrl.observation" type="text" name="observation" required/> <br>
+        <input ng-model="ctrl.contact.observation" type="text" name="observation" required/> <br>
         Endereços:
-        <input  ng-model="ctrl.adress" type="text" name="adress" required/> <br>
+        <input   type="text" name="adress" required/> <br>
         <br>
         <button type="button" name="resetForm"> Resetar formulário </button>
-        <button ng-click="ctrl.CreateContact()" type="submit" name="addContact"> Adicionar contato </button>
+        <button ng-click="ctrl.addContact()" type="submit" name="addContact"> Adicionar contato </button>
 
       </form>
     </div>
 
-    <div class="col-3" id="contacts-list">
+    <contact-list id='contactList' contacts="ctrl.allContacts" add-contact="$ctrl.addContact()"> </contact-list>
+    <div id='test'> </test>
+    <!--<div class="col-3" id="contacts-list">
       <div class="row">
         <div class="contact col-1">
           <h3> Contato 1 </h3>
@@ -60,7 +65,7 @@
           <p> Endereço...</p>
         </div>
       </div>
-    </div>
+    </div>-->
   </div>
 
 </body>

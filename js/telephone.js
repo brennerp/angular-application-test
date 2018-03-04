@@ -1,6 +1,7 @@
-angular.module ('application').component ('telephoneInfo') {
-  templateUrl: 'contact.html',
+angular.module ('application').component ('telephoneInfo', {
+  template: `<p> Telefone {{ $ctrl.order }}: {{ $ctrl.telephone }} </p> <br>`,
   bindings: {
-    telephone: '@'
+    telephone: '<',
+    order: '<'
   }
-}
+});
