@@ -9,35 +9,36 @@
   <link rel="stylesheet" href="css/grid.css">
   <link rel="stylesheet" href="css/style.css">
 
-  <script src="angular/angular.min.js"></script>
-  <script src="js/app.js"> </script>
+  <script src="angular/angular.min.js"> </script>
+  <script src="js/FormController.js"> </script>
+  <script src="js/telephoneInput.js"></script>
+  <script src="js/telephoneInputList.js"></script>
   <script src="js/telephone.js"></script>
   <script src="js/contact.js"></script>
   <script src="js/contactList.js"></script>
 </head>
 
 <body>
-  <div class="container" ng-controller="ListController as ctrl">
+  <div class="container" ng-controller="FormController as ctrl">
     <div class="row">
       <form novalidate id="form" class="form col-3">
         Nome completo: <br>
-        <input ng-model="ctrl.contact.contactName" type="text" name="contactName" required/> <br>
+        <input ng-model="contact.contactName" type="text" name="contactName" required/> <br>
+        Observação: <br>
+        <input ng-model="contact.observation" type="text" name="observation" required/> <br>
         E-mail: <br>
-        <input ng-model="ctrl.contact.email" type="email" name="email" required/> <br>
-        Telefones:
-        <input type="text" name="telephone" required/> <br>
-        Observações:
-        <input ng-model="ctrl.contact.observation" type="text" name="observation" required/> <br>
+        <input ng-model="contact.email" type="email" name="email" required/> <br>
+        <telephone-input-list on-add="ctrl.addPhone()" on-update="ctrl.updatePhone(index, value)" on-delete="ctrl.deletePhone(index)" telephones="contact.telephones"> </telephone-input-list>
         Endereços:
-        <input   type="text" name="adress" required/> <br>
+        <input  type="text" name="adress" required/> <br>
         <br>
         <button type="button" name="resetForm"> Resetar formulário </button>
-        <button ng-click="ctrl.addContact()" type="submit" name="addContact"> Adicionar contato </button>
+        <button ng-click="ctrl.addContact(contact)" type="submit" name="addContact"> Adicionar contato </button>
 
       </form>
     </div>
 
-    <contact-list id='contactList' contacts="ctrl.allContacts" add-contact="$ctrl.addContact()"> </contact-list>
+    <contact-list id='contactList' contacts="ctrl.allContacts"> </contact-list>
     <div id='test'> </test>
     <!--<div class="col-3" id="contacts-list">
       <div class="row">

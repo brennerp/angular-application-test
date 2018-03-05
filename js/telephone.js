@@ -1,5 +1,5 @@
-angular.module ('application').component ('telephoneInfo', {
-  template: `<p> Telefone {{ $ctrl.order }}: {{ $ctrl.telephone }} </p> <br>`,
+application.component ('telephoneInfo', {
+  template: `<p> Telefone {{ $ctrl.order }}: {{ $ctrl.telephone.number }} </p> <br>`,
   bindings: {
     telephone: '<',
     order: '<'
