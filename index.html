@@ -10,10 +10,18 @@
   <link rel="stylesheet" href="css/style.css">
 
   <script src="angular/angular.min.js"> </script>
+  <script src="js/addressSearchService.js"></script>
   <script src="js/FormController.js"> </script>
+
+  <script src="js/telephoneInfo.js"></script>
   <script src="js/telephoneInput.js"></script>
   <script src="js/telephoneInputList.js"></script>
-  <script src="js/telephone.js"></script>
+
+
+  <script src="js/addressInfo.js"></script>
+  <script src="js/addressInput.js"></script>
+  <script src="js/addressInputList.js"></script>
+
   <script src="js/contact.js"></script>
   <script src="js/contactList.js"></script>
 </head>
@@ -29,8 +37,7 @@
         E-mail: <br>
         <input ng-model="contact.email" type="email" name="email" required/> <br>
         <telephone-input-list on-add="ctrl.addPhone()" on-update="ctrl.updatePhone(index, value)" on-delete="ctrl.deletePhone(index)" telephones="contact.telephones"> </telephone-input-list>
-        Endereços:
-        <input  type="text" name="adress" required/> <br>
+        <address-input-list on-add="ctrl.addAddress()" on-update="ctrl.updateAddress(index, prop, value)" on-delete="ctrl.deleteAddress(index)" on-search="ctrl.searchAddress (index)" addresses="contact.addresses"> </address-input-list>
         <br>
         <button type="button" name="resetForm"> Resetar formulário </button>
         <button ng-click="ctrl.addContact(contact)" type="submit" name="addContact"> Adicionar contato </button>
@@ -39,34 +46,6 @@
     </div>
 
     <contact-list id='contactList' contacts="ctrl.allContacts"> </contact-list>
-    <div id='test'> </test>
-    <!--<div class="col-3" id="contacts-list">
-      <div class="row">
-        <div class="contact col-1">
-          <h3> Contato 1 </h3>
-          <h4> Observação </h4>
-          <p> contato1@gmail.com </p>
-          <p> +zz yy xxxxx-xxxx</p>
-          <p> Endereço...</p>
-        </div>
-
-        <div class="contact col-1">
-          <h3> Contato 2 </h3>
-          <h4> Observação </h4>
-          <p> contato2@gmail.com </p>
-          <p> +zz yy xxxxx-xxxx</p>
-          <p> Endereço...</p>
-        </div>
-
-        <div class="contact col-1">
-          <h3> Contato 3 </h3>
-          <h4> Observação </h4>
-          <p> contato3@gmail.com </p>
-          <p> +zz yy xxxxx-xxxx</p>
-          <p> Endereço...</p>
-        </div>
-      </div>
-    </div>-->
   </div>
 
 </body>

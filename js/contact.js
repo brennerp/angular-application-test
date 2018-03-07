@@ -4,7 +4,7 @@ application.component('contactInfo', {
     <h4> {{ $ctrl.contact.observation }} </h4> <br>
     <p> {{ $ctrl.contact.email }} </p> <br>
     <telephone-info ng-repeat="telephone in $ctrl.contact.telephones" telephone="telephone" order="($index + 1)"> </telephone-info>
-    <p> Endereço...</p> <br>
+    <address-info ng-repeat="address in $ctrl.contact.addresses" address="address" order="($index + 1)"> </address-info>
   </div>`,
   bindings: {
     contact: '<'
