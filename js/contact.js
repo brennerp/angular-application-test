@@ -1,4 +1,4 @@
-application.component('contactInfo', {
+angular.module ('application').component('contactInfo', {
   template: `<div class="contact col-1">
     <h3> {{ $ctrl.contact.contactName }} </h3> <br>
     <h4> {{ $ctrl.contact.observation }} </h4> <br>

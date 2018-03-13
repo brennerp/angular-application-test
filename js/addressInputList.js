@@ -6,7 +6,6 @@ function AddressInputListController () {
   }
 
   self.updateAddress = function (index, prop, value) {
-    console.log ('Passing through address list with index ' + index + ' and value ' + value);
     self.onUpdate ({ index: index, prop: prop, value: value });
   }
 
@@ -19,7 +18,7 @@ function AddressInputListController () {
   }
 }
 
-application.component ('addressInputList', {
+angular.module ('application').component ('addressInputList', {
   template: `<p>Endereços: <button type="button" ng-click="$ctrl.addAddress()"> + </button> <br>
    <address-input ng-repeat="address in $ctrl.addresses track by address.id" index="$index"
    address="address" on-delete="$ctrl.deleteAddress(index)" on-search="$ctrl.searchCEP(index)" on-update="$ctrl.updateAddress(index, prop, value)"> </address-input> <br> </p>`,

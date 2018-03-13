@@ -10,8 +10,7 @@ function AddressInputController () {
   }
 
   self.update = function (prop) {
-    console.log ('Updating address input!');
-    self.onUpdate ({ index: self.index, prop: prop, value: $ctrl.address[prop]});
+    self.onUpdate ({ index: self.index, prop: prop, value: self.address[prop]});
   }
 
   self.searchCEP = function () {
@@ -19,7 +18,7 @@ function AddressInputController () {
   }
 }
 
-application.component ('addressInput', {
+angular.module ('application').component ('addressInput', {
   template: `<p> Endereço {{ $ctrl.index + 1 }}: <button type="button" ng-click="$ctrl.delete()"> - </button> <br>
   <p> <input type="text" name="cep" ng-model="$ctrl.address.cep" ng-change="$ctrl.update('cep')" placeholder="Insira seu CEP" /> <button type="button" ng-click="$ctrl.searchCEP()"> s </button> <br>
       <input type="text" name="location" ng-model="$ctrl.address.location" ng-change="$ctrl.update('location')" placeholder="Insira o logradouro" />

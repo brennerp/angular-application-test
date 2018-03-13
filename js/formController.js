@@ -1,10 +1,9 @@
-const application = angular.module ('application', []);
-
-application.controller ('FormController', [ '$scope', '$http',
-  function($scope, $http) {
+angular.module ('application').controller ('FormController', [ '$scope', '$http',
+  function ($scope, $http) {
     const self = this;
 
     self.$onInit = function () {
+      self.allContacts = [];
       $scope.telephoneIDCount = 0;
       $scope.addressIDCount = 0;
 
@@ -13,42 +12,70 @@ application.controller ('FormController', [ '$scope', '$http',
       $scope.contact.telephones = [];
       $scope.contact.addresses = [];
 
-      self.allContacts = [
-        {
-          contactName: "Alberto",
-          observation: "Filho do João",
-          email: "alberto1992@fulano.com",
-          telephones: [
-            { number: "aaaa aaa aaaaa" },
-            { number: "bbb bbbbb bbbbb" }
-          ],
-          addresses: [
-            { cep: "31829-810", number: "470 Ap201" }
-          ]
-        },
-        {
-          contactName: "João",
-          observation: "Amigo da Sandra",
-          email: "joaorodrigo@fulano.com",
-          telephones: [
-            { number: "ccc cccc cccccc" },
-            { number: "ddd dddd ddddd" }
-          ],
-          addresses: [
-            { cep: "32419-512", number: "106" },
-            { cep: "32629-782", number: "510 Ap201" }
-          ]
-        }
-      ];
+      self.hasLocalStorage = self.supportsLocalStorage();
+      self.loadContactList ();
+    }
+
+    // localStorage detection
+    self.supportsLocalStorage = function () {
+      return typeof(Storage) !== 'undefined';
     }
 
     self.addContact = function (contact) {
-      console.log ("Telephones: " + contact.telephones.length);
       var newContact = angular.copy (contact);
-      for (var telephone in contact.telephones) {
-        console.log (telephone.number);
-      }
       self.allContacts.push (newContact);
+    }
+
+    self.loadContactList = function () {
+      if (self.hasLocalStorage) {
+        console.log ("Loading from local storage");
+        var contactListJSON = localStorage.getItem ('contactList');
+
+        if (contactListJSON != undefined) {
+          var contacts = JSON.parse(contactListJSON);
+          console.log (contacts);
+
+          for (var i = 0; i < contacts.length; i++) {
+            console.log (contacts[i]);
+            self.allContacts.push ({
+              contactName: contacts[i].contactName,
+              observation: contacts[i].observation,
+              telephones: contacts[i].telephones,
+              addresses: contacts[i].addresses
+            });
+          }
+        }
+
+          console.log (self.allContacts);
+      }
+    }
+
+    self.checkAndSubmit = function (contact) {
+      var valid = true;
+
+      if (valid) {
+        self.addContact (contact);
+        self.saveContactList ();
+      } else {
+
+      }
+    }
+
+    self.saveContactList = function () {
+      if (self.hasLocalStorage) {
+        console.log ("Saving to local storage: ");
+        var contactListJSON = JSON.stringify (self.allContacts);
+        console.log (contactListJSON);
+        localStorage.setItem ('contactList', contactListJSON);
+      }
+    }
+
+    self.eraseContactList = function () {
+      if (self.hasLocalStorage) {
+        console.log ("Apagando contatos");
+        localStorage.removeItem ('contactList');
+        self.allContacts.splice (0, self.allContacts.length);
+      }
     }
 
     /* Phone functions */
@@ -79,6 +106,7 @@ application.controller ('FormController', [ '$scope', '$http',
     /* Address functions */
     self.searchAddress = function (index) {
       if (index >= 0 && index < $scope.contact.addresses.length) {
+
         let cep = $scope.contact.addresses[index].cep
         let searchUrl = 'http://api.postmon.com.br/v1/cep/' + cep;
 
