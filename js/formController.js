@@ -9,6 +9,8 @@ angular.module ('application').controller ('FormController', [ '$scope', '$http'
 
       $scope.contact = {};
       $scope.contact.contactName = '';
+      $scope.contact.email = '';
+      $scope.contact.observation = '';
       $scope.contact.telephones = [];
       $scope.contact.addresses = [];
 
@@ -28,17 +30,18 @@ angular.module ('application').controller ('FormController', [ '$scope', '$http'
 
     self.loadContactList = function () {
       if (self.hasLocalStorage) {
-        console.log ("Loading from local storage");
+        //console.log ("Loading from local storage");
         var contactListJSON = localStorage.getItem ('contactList');
 
         if (contactListJSON != undefined) {
           var contacts = JSON.parse(contactListJSON);
-          console.log (contacts);
+          //console.log (contacts);
 
           for (var i = 0; i < contacts.length; i++) {
-            console.log (contacts[i]);
+            //console.log (contacts[i]);
             self.allContacts.push ({
               contactName: contacts[i].contactName,
+              email: contacts[i].email,
               observation: contacts[i].observation,
               telephones: contacts[i].telephones,
               addresses: contacts[i].addresses
@@ -46,26 +49,83 @@ angular.module ('application').controller ('FormController', [ '$scope', '$http'
           }
         }
 
-          console.log (self.allContacts);
+        //console.log (self.allContacts);
       }
     }
 
     self.checkAndSubmit = function (contact) {
       var valid = true;
 
-      if (valid) {
-        self.addContact (contact);
-        self.saveContactList ();
-      } else {
+      if (self.contactNameIsValid(contact.contactName) &&
+          self.emailIsValid(contact.email) &&
+          self.telephonesAreValid (contact.telephones)) {
 
+          self.addContact (contact);
+          self.saveContactList ();
       }
+    }
+
+    self.contactNameIsValid = function (contactName) {
+      if (contactName == undefined || contactName == '') {
+        alert ('Nome de contato inválido. Tente novamente!');
+        return false;
+      }
+
+      return true;
+    }
+
+    self.emailIsValid = function (email) {
+      var pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+
+      if (email == undefined || email == '' || !pattern.test(email)) {
+        alert ('E-mail inválido. Tente novamente!');
+        return false;
+      } else if (self.alreadyHasEmail (email)) {
+        alert ('E-mail já foi cadastrado. Tente outro!');
+        return false;
+      }
+
+      return true;
+    }
+
+    self.alreadyHasEmail = function (email) {
+      for (var i = 0; i < self.allContacts.length; i++) {
+        if (email == self.allContacts[i].email) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    self.telephonesAreValid = function (telephones) {
+        for (var i = 0; i < telephones.length; i++) {
+          if (self.alreadyHasTelephone(telephones[i].number)) {
+            alert ('Algum dos telefones já foi cadastrado. Tente outro');
+            return false;
+          }
+        }
+
+        return true;
+    }
+
+    self.alreadyHasTelephone = function (number) {
+      for (var i = 0; i < self.allContacts.length; i++) {
+        for (var j = 0; j < self.allContacts[i].telephones.length; j++) {
+          if (number == self.allContacts[i].telephones[j].number) {
+            return true;
+          }
+        }
+      }
+
+      return false;
     }
 
     self.saveContactList = function () {
       if (self.hasLocalStorage) {
-        console.log ("Saving to local storage: ");
+        //console.log ("Saving to local storage: ");
         var contactListJSON = JSON.stringify (self.allContacts);
-        console.log (contactListJSON);
+        //console.log (contactListJSON);
         localStorage.setItem ('contactList', contactListJSON);
       }
     }

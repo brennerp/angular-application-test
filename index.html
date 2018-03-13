@@ -41,7 +41,7 @@
         <address-input-list on-add="ctrl.addAddress()" on-update="ctrl.updateAddress(index, prop, value)" on-delete="ctrl.deleteAddress(index)" on-search="ctrl.searchAddress (index)" addresses="contact.addresses"> </address-input-list>
         <br>
         <button type="button" name="resetForm"> Resetar formulário </button>
-        <button ng-click="ctrl.addContact(contact)" type="submit" name="addContact"> Adicionar contato </button>
+        <button ng-click="ctrl.checkAndSubmit(contact)" type="submit" name="addContact"> Adicionar contato </button>
 
       </form>
     </div>
