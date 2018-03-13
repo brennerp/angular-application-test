@@ -18,11 +18,12 @@ angular.module ('application').controller ('FormController', [ '$scope', '$http'
       self.loadContactList ();
     }
 
-    // localStorage detection
+    /* Local storage detection */
     self.supportsLocalStorage = function () {
       return typeof(Storage) !== 'undefined';
     }
 
+    /* List functions */
     self.addContact = function (contact) {
       var newContact = angular.copy (contact);
       self.allContacts.push (newContact);
@@ -30,15 +31,12 @@ angular.module ('application').controller ('FormController', [ '$scope', '$http'
 
     self.loadContactList = function () {
       if (self.hasLocalStorage) {
-        //console.log ("Loading from local storage");
         var contactListJSON = localStorage.getItem ('contactList');
 
         if (contactListJSON != undefined) {
           var contacts = JSON.parse(contactListJSON);
-          //console.log (contacts);
 
           for (var i = 0; i < contacts.length; i++) {
-            //console.log (contacts[i]);
             self.allContacts.push ({
               contactName: contacts[i].contactName,
               email: contacts[i].email,
@@ -48,8 +46,33 @@ angular.module ('application').controller ('FormController', [ '$scope', '$http'
             });
           }
         }
+      }
+    }
 
-        //console.log (self.allContacts);
+    self.saveContactList = function () {
+      if (self.hasLocalStorage) {
+        var contactListJSON = JSON.stringify (self.allContacts);
+        localStorage.setItem ('contactList', contactListJSON);
+      }
+    }
+
+    self.eraseContactList = function () {
+      var response = confirm ('Tem certeza de que deseja apagar todos seus contatos?');
+      if (response && self.hasLocalStorage) {
+        localStorage.removeItem ('contactList');
+        self.allContacts.splice (0, self.allContacts.length);
+      }
+    }
+
+    /* Form functions */
+    self.resetForm = function () {
+      var response = confirm ('Deseja resetar o formulário?');
+      if (response) {
+        $scope.contact.contactName = '';
+        $scope.contact.email = '';
+        $scope.contact.observation = '';
+        $scope.contact.telephones = [];
+        $scope.contact.addresses = [];
       }
     }
 
@@ -119,23 +142,6 @@ angular.module ('application').controller ('FormController', [ '$scope', '$http'
       }
 
       return false;
-    }
-
-    self.saveContactList = function () {
-      if (self.hasLocalStorage) {
-        //console.log ("Saving to local storage: ");
-        var contactListJSON = JSON.stringify (self.allContacts);
-        //console.log (contactListJSON);
-        localStorage.setItem ('contactList', contactListJSON);
-      }
-    }
-
-    self.eraseContactList = function () {
-      if (self.hasLocalStorage) {
-        console.log ("Apagando contatos");
-        localStorage.removeItem ('contactList');
-        self.allContacts.splice (0, self.allContacts.length);
-      }
     }
 
     /* Phone functions */

@@ -3,10 +3,9 @@
 
 <head>
   <meta charset="utf-8">
-  <title> Registro de Contatos </title>
+  <title> Agenda de Contatos </title>
   <meta name="viewport" content="width=device-width">
 
-  <link rel="stylesheet" href="css/grid.css">
   <link rel="stylesheet" href="css/style.css">
 
   <script src="angular/angular.min.js"> </script>
@@ -29,25 +28,33 @@
 
 <body>
   <div class="container" ng-controller="FormController as ctrl">
-    <div class="row">
-      <form novalidate id="form" class="form col-3">
-        Nome completo: <br>
-        <input ng-model="contact.contactName" type="text" name="contactName" required/> <br>
-        Observação: <br>
-        <input ng-model="contact.observation" type="text" name="observation" required/> <br>
-        E-mail: <br>
-        <input ng-model="contact.email" type="email" name="email" required/> <br>
-        <telephone-input-list on-add="ctrl.addPhone()" on-update="ctrl.updatePhone(index, value)" on-delete="ctrl.deletePhone(index)" telephones="contact.telephones"> </telephone-input-list>
-        <address-input-list on-add="ctrl.addAddress()" on-update="ctrl.updateAddress(index, prop, value)" on-delete="ctrl.deleteAddress(index)" on-search="ctrl.searchAddress (index)" addresses="contact.addresses"> </address-input-list>
-        <br>
-        <button type="button" name="resetForm"> Resetar formulário </button>
-        <button ng-click="ctrl.checkAndSubmit(contact)" type="submit" name="addContact"> Adicionar contato </button>
 
-      </form>
-    </div>
+    <h1 id="title"> Minha Agenda de Contatos </h1>
 
-    <button type="button" name="eraseList" ng-click="ctrl.eraseContactList()"> Apagar contatos </button>
+    <form novalidate id="form" class="form">
+      <p> Nome: <br>
+      <input ng-model="contact.contactName" type="text" name="contactName" maxlength="50" required/> </p>
+
+      <p> Observação: <br>
+      <input ng-model="contact.observation" type="text" name="observation" maxlength="20" maxlengthrequired/> </p>
+
+      <p> E-mail: <br>
+      <input ng-model="contact.email" type="email" name="email" maxlength="100" required/> </p>
+
+      <telephone-input-list on-add="ctrl.addPhone()" on-update="ctrl.updatePhone(index, value)" on-delete="ctrl.deletePhone(index)" telephones="contact.telephones"> </telephone-input-list>
+      <address-input-list on-add="ctrl.addAddress()" on-update="ctrl.updateAddress(index, prop, value)" on-delete="ctrl.deleteAddress(index)" on-search="ctrl.searchAddress (index)" addresses="contact.addresses"> </address-input-list>
+      <br>
+
+      <p> <button type="submit" name="addContact" ng-click="ctrl.checkAndSubmit(contact)"> Adicionar contato </button> </p>
+
+      <p> <button type="button" name="resetForm" ng-click="ctrl.resetForm()"> Resetar formulário </button>
+      <button type="button" name="eraseList" ng-click="ctrl.eraseContactList()"> Apagar contatos </button> </p>
+    </form>
+
+
     <contact-list id='contactList' contacts="ctrl.allContacts"> </contact-list>
+
+
   </div>
 
 </body>
